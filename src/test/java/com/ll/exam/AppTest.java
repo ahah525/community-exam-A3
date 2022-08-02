@@ -3,6 +3,8 @@ package com.ll.exam;
 import com.ll.exam.article.controller.ArticleController;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AppTest {
@@ -27,5 +29,14 @@ public class AppTest {
         ArticleController articleController2 = Con.getArticleController();
         // then: 같은 객체가 반환되는지 검증(싱글톤 검증)
         assertThat(articleController1).isEqualTo(articleController2);
+    }
+
+    @Test
+    public void ioc__dd() {
+        // when: 컴포넌트 스캔
+        List<String> names = Con.getControllerNames();
+        // then: @Controller가 붙은 컴포넌트 모두 조회되었는지 검증
+        assertThat(names).contains("Home");
+        assertThat(names).contains("Article");
     }
 }
