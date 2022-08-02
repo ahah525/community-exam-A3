@@ -19,30 +19,30 @@ public class AppTest {
     @Test
     public void ioc__articleController() {
         // when: con에서 ArticleController 받아옴
-        ArticleController articleController = Con.getArticleController();
+        ArticleController articleController = Con.getObj(ArticleController.class);
         // then: 받아온 articleController가 null이 아닌지 검증
         assertThat(articleController).isNotNull();
     }
 
     @Test
     public void ioc__articleController__싱글톤() {
-        ArticleController articleController1 = Con.getArticleController();
-        ArticleController articleController2 = Con.getArticleController();
+        ArticleController articleController1 = Con.getObj(ArticleController.class);
+        ArticleController articleController2 = Con.getObj(ArticleController.class);
         // then: 같은 객체가 반환되는지 검증(싱글톤 검증)
         assertThat(articleController1).isEqualTo(articleController2);
     }
 
     @Test
     public void ioc__homeController() {
-        HomeController homeController = Con.getHomeController();
+        HomeController homeController = Con.getObj(HomeController.class);
 
         assertThat(homeController).isNotNull();
     }
 
     @Test
     public void ioc__homeController__싱글톤() {
-        HomeController homeController1 = Con.getHomeController();
-        HomeController homeController2 = Con.getHomeController();
+        HomeController homeController1 = Con.getObj(HomeController.class);
+        HomeController homeController2 = Con.getObj(HomeController.class);
 
         assertThat(homeController2).isEqualTo(homeController1);
     }
@@ -55,6 +55,4 @@ public class AppTest {
         assertThat(names).contains("Home");
         assertThat(names).contains("Article");
     }
-
-
 }
