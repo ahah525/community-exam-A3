@@ -1,6 +1,7 @@
 package com.ll.exam;
 
 import com.ll.exam.article.controller.ArticleController;
+import com.ll.exam.article.repository.ArticleRepository;
 import com.ll.exam.home.controller.HomeController;
 import com.ll.exam.article.service.ArticleService;
 import org.junit.jupiter.api.Test;
@@ -77,9 +78,18 @@ public class AppTest {
     @Test
     public void articleController를_생성할때_articleService도_같이_생성() {
         ArticleController articleController = Container.getObj(ArticleController.class);
-
-        ArticleService articleService = articleController.getArticleServiceForTest();
+        // when: articleController에 articleService 필드명을 가진 필드값 조회
+        ArticleService articleService = Ut.reflection.getFieldValue(articleController, "articleService", null);
         // then:
         assertThat(articleService).isNotNull();
+    }
+
+    @Test
+    public void articleService를_생성할때_articleRepository도_같이_생성() {
+        ArticleService articleService = Container.getObj(ArticleService.class);
+        // when:
+        ArticleRepository articleRepository = Ut.reflection.getFieldValue(articleService, "articleRepository", null);
+        // then:
+        assertThat(articleRepository).isNotNull();
     }
 }

@@ -17,9 +17,4 @@ public class ArticleController {
     public void showList() {
 
     }
-
-    // 테스트 용도
-    public ArticleService getArticleServiceForTest() {
-        return articleService;
-    }
 }

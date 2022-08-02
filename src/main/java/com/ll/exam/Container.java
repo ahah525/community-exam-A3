@@ -2,6 +2,7 @@ package com.ll.exam;
 
 import com.ll.exam.annotation.Autowired;
 import com.ll.exam.annotation.Controller;
+import com.ll.exam.annotation.Repository;
 import com.ll.exam.annotation.Service;
 import org.reflections.Reflections;
 
@@ -19,15 +20,24 @@ public class Container {
     }
 
     public static void scanComponents() {
-        // 컴포넌트 스캔(Controller가 Service를 의존하므로 역순 생성)
+        // 컴포넌트 스캔(Controller->Service->Repository 의존하므로 역순 생성)
+        scanRepositories();
         scanServices();
         scanControllers();
         // 의존관계 자동 주입
         resolveDependenciesAllComponents();
     }
 
+    private static void scanRepositories() {
+        Reflections ref = new Reflections(App.BASE_PACKAGE_PATH);
+        // @Repository가 붙은 모든 클래스 객체 생성하여 등록
+        for (Class<?> cls : ref.getTypesAnnotatedWith(Repository.class)) {
+            objects.put(cls, Ut.cls.newObj(cls, null));
+        }
+    }
+
     public static void scanServices() {
-        Reflections ref = new Reflections("com.ll.exam");
+        Reflections ref = new Reflections(App.BASE_PACKAGE_PATH);
         // @Service가 붙은 모든 클래스 객체 생성하여 등록
         for (Class<?> cls : ref.getTypesAnnotatedWith(Service.class)) {
             objects.put(cls, Ut.cls.newObj(cls, null));
@@ -35,7 +45,7 @@ public class Container {
     }
 
     public static void scanControllers() {
-        Reflections ref = new Reflections("com.ll.exam");
+        Reflections ref = new Reflections(App.BASE_PACKAGE_PATH);
         // @Controller가 붙은 모든 클래스 객체 생성하여 등록
         for (Class<?> cls : ref.getTypesAnnotatedWith(Controller.class)) {
             objects.put(cls, Ut.cls.newObj(cls, null));
