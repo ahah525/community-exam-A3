@@ -73,4 +73,13 @@ public class AppTest {
         // then: 받아온 객체가 같은지 검증(싱글톤 검증)
         assertThat(articleService2).isEqualTo(articleService1);
     }
+
+    @Test
+    public void articleController를_생성할때_articleService도_같이_생성() {
+        ArticleController articleController = Container.getObj(ArticleController.class);
+
+        ArticleService articleService = articleController.getArticleServiceForTest();
+        // then:
+        assertThat(articleService).isNotNull();
+    }
 }
