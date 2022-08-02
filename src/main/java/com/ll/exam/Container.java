@@ -15,14 +15,28 @@ public class Container {
 
     static {
         objects = new HashMap<>();
-        // 모든 객체 Map에 삽입하기(최초 1번 실행)
+        // 컴포넌트 스캔
+        scanComponents();
+    }
+
+    public static void scanComponents() {
+        //
+        scanServices();
+        scanControllers();
+    }
+
+    public static void scanServices() {
+        Reflections ref = new Reflections("com.ll.exam");
+        // @Service가 붙은 모든 객체 생성하여 등록
+        for (Class<?> cls : ref.getTypesAnnotatedWith(Service.class)) {
+            objects.put(cls, Ut.cls.newObj(cls, null));
+        }
+    }
+
+    public static void scanControllers() {
         Reflections ref = new Reflections("com.ll.exam");
         // @Controller가 붙은 모든 객체 생성하여 등록
         for (Class<?> cls : ref.getTypesAnnotatedWith(Controller.class)) {
-            objects.put(cls, Ut.cls.newObj(cls, null));
-        }
-        // @Service가 붙은 모든 객체 생성하여 등록
-        for (Class<?> cls : ref.getTypesAnnotatedWith(Service.class)) {
             objects.put(cls, Ut.cls.newObj(cls, null));
         }
     }
