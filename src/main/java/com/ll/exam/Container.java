@@ -1,6 +1,7 @@
 package com.ll.exam;
 
 import com.ll.exam.annotation.Controller;
+import com.ll.exam.annotation.Service;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Con {
+public class Container {
     // 컴포넌트 저장을 위한 맵
     private static Map<Class, Object> objects;
 
@@ -18,6 +19,10 @@ public class Con {
         Reflections ref = new Reflections("com.ll.exam");
         // @Controller가 붙은 모든 객체 생성하여 등록
         for (Class<?> cls : ref.getTypesAnnotatedWith(Controller.class)) {
+            objects.put(cls, Ut.cls.newObj(cls, null));
+        }
+        // @Service가 붙은 모든 객체 생성하여 등록
+        for (Class<?> cls : ref.getTypesAnnotatedWith(Service.class)) {
             objects.put(cls, Ut.cls.newObj(cls, null));
         }
     }
