@@ -1,8 +1,6 @@
 package com.ll.exam;
 
 import com.ll.exam.annotation.Controller;
-import com.ll.exam.article.controller.ArticleController;
-import com.ll.exam.home.controller.HomeController;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
@@ -16,9 +14,12 @@ public class Con {
 
     static {
         objects = new HashMap<>();
-        // 최초 1번 실행
-        objects.put(ArticleController.class, new ArticleController());
-        objects.put(HomeController.class, new HomeController());
+        // 모든 객체 Map에 삽입하기(최초 1번 실행)
+        Reflections ref = new Reflections("com.ll.exam");
+        // @Controller가 붙은 모든 객체 생성하여 등록
+        for (Class<?> cls : ref.getTypesAnnotatedWith(Controller.class)) {
+            objects.put(cls, Ut.cls.newObj(cls, null));
+        }
     }
 
     // 객체 반환
