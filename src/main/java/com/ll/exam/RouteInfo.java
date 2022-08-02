@@ -7,5 +7,6 @@ import java.lang.reflect.Method;
 @AllArgsConstructor
 public class RouteInfo {
     private String path;    // 요청 path
+    private String actionPath;
     private Method method;  // http 요청 메서드
 }
