@@ -1,6 +1,7 @@
 package com.ll.exam;
 
 import com.ll.exam.article.controller.ArticleController;
+import com.ll.exam.home.controller.HomeController;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class AppTest {
     }
 
     @Test
-    public void ioc__articleController__2() {
+    public void ioc__articleController__싱글톤() {
         ArticleController articleController1 = Con.getArticleController();
         ArticleController articleController2 = Con.getArticleController();
         // then: 같은 객체가 반환되는지 검증(싱글톤 검증)
@@ -32,11 +33,28 @@ public class AppTest {
     }
 
     @Test
-    public void ioc__dd() {
+    public void ioc__homeController() {
+        HomeController homeController = Con.getHomeController();
+
+        assertThat(homeController).isNotNull();
+    }
+
+    @Test
+    public void ioc__homeController__싱글톤() {
+        HomeController homeController1 = Con.getHomeController();
+        HomeController homeController2 = Con.getHomeController();
+
+        assertThat(homeController2).isEqualTo(homeController1);
+    }
+
+    @Test
+    public void ioc__Controller들을_스캔하여_수집() {
         // when: 컴포넌트 스캔
         List<String> names = Con.getControllerNames();
         // then: @Controller가 붙은 컴포넌트 모두 조회되었는지 검증
         assertThat(names).contains("Home");
         assertThat(names).contains("Article");
     }
+
+
 }
