@@ -12,9 +12,15 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    // /usr/article/list GET 요청 처리
-    @GetMapping("/usr/article/list")
+    // /usr/article/list/{} GET 요청 처리
+    @GetMapping("/usr/article/list/{boardCode}")
     public void showList() {
+
+    }
+
+    // /usr/article/detail/{boardCode} GET 요청 처리
+    @GetMapping("/usr/article/detail/{boardCode}")
+    public void showDetail() {
 
     }
 }

@@ -13,7 +13,7 @@ public class DispatchServlet extends HttpServlet {
     // 조회
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("Hi");
+        ControllerManager.runAction(req, resp);
     }
 
     // 등록
