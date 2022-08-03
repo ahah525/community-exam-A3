@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 
 @AllArgsConstructor
 public class RouteInfo {
+    @Getter
     private String path;    // 요청 path
     private String actionPath;      // path(파라미터 제외)
     @Getter
